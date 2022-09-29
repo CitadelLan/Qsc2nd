@@ -72,14 +72,9 @@ block3.y = block3.height*2;
 block4.y = block4.height*3;
 block5.y = block5.height*4;
 
-//计时部分
-var CurrentTime = 0;	//当前时间
-var StartTime = 0;		//上一次记录的事件
-
 let score = 0;			//游戏分数
 
 const dest = block1.height*4;	//终点高度
-var isEsc = false;
 
 //函数部分
 
@@ -114,10 +109,6 @@ function DrawBackboard() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(image, 0, 0, image.width, image.height);
 	DrawBackboard();	//补上擦去背景后的道线
-	if(isEsc){
-		CurrentTime = Date.now();		//计时
-		document.getElementById("time").textContent = (CurrentTime - StartTime)/1000+"s";
-	}
  	block1.draw();		//画出更新位置后的方块
  	block2.draw();		//画出更新位置后的方块
  	block3.draw();		//画出更新位置后的方块
@@ -160,7 +151,6 @@ window.addEventListener("keydown", (event) => {
 	switch (event.key) {
 		//第一条轨道
 		case "s": 
-			if(isEsc){
 			block1.y += block1.height;	//更新位置
 			block2.y += block1.height;	//更新位置
 			block3.y += block1.height;	//更新位置
@@ -171,7 +161,7 @@ window.addEventListener("keydown", (event) => {
 			CheckClick(block3, 0);		//检查按键
 			CheckClick(block4, 0);		//检查按键
 			CheckClick(block5, 0);		//检查按键
-			break;}
+			break;
 		//第二条轨道
 		case "d":
 			block1.y += block1.height;	//更新位置
@@ -210,11 +200,6 @@ window.addEventListener("keydown", (event) => {
 			CheckClick(block3, 3);		//检查按键
 			CheckClick(block4, 3);		//检查按键
 			CheckClick(block5, 3);		//检查按键
-			break;
-		case "Escape":
-			isEsc = true;
-			StartTime = Date.now();
-			document.getElementById("Initiate").textContent = "Time left:";
 			break;
 		default:
 			return;
